@@ -1,53 +1,36 @@
-
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useEffect } from 'react';
 
 const CategoryMenu = ({ categories, activeCategory, onCategoryClick }) => {
   const menuRef = useRef(null);
-  const [isOverflowing, setIsOverflowing] = useState(false);
-  const [isScrolledDown, setIsScrolledDown] = useState(false);
 
-  useEffect(() => {
-    const checkOverflow = () => {
-      if (menuRef.current) {
-        setIsOverflowing(menuRef.current.scrollWidth > menuRef.current.clientWidth);
-      }
-    };
+  const scrollToSection = (index) => {
+    const targetElement = document.getElementById(`section-${index}`);
     
-    checkOverflow();
-    window.addEventListener('resize', checkOverflow);
-
-    return () => {
-      window.removeEventListener('resize', checkOverflow);
-    };
-  }, []);
+    // Check if element exists and smoothly scroll to it
+    if (targetElement) {
+      targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
 
   useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 0) {
-        setIsScrolledDown(true);
-      } else {
-        setIsScrolledDown(false);
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
+    const activeItem = menuRef.current?.children[activeCategory];
+    if (activeItem) {
+      activeItem.scrollIntoView({ inline: 'center', behavior: 'smooth' });
+    }
+  }, [activeCategory]);
 
   const scrollMenu = (direction) => {
-    if (direction === 'left') {
-      menuRef.current.scrollBy({ left: -200, behavior: 'smooth' });
-    } else {
-      menuRef.current.scrollBy({ left: 200, behavior: 'smooth' });
+    if (menuRef.current) {
+      if (direction === 'left') {
+        menuRef.current.scrollBy({ left: -200, behavior: 'smooth' });
+      } else {
+        menuRef.current.scrollBy({ left: 200, behavior: 'smooth' });
+      }
     }
   };
 
   return (
-    <div className={`category-menu ${isScrolledDown ? 'scrolled' : ''}`}>
-     
+    <div className="category-menu">
       <div className="menu-items" ref={menuRef}>
         {categories.map((category, index) => (
           <div
@@ -59,16 +42,8 @@ const CategoryMenu = ({ categories, activeCategory, onCategoryClick }) => {
           </div>
         ))}
       </div>
-      {isOverflowing && (
-        <>
-          <button className="scroll-arrow left-arrow" onClick={() => scrollMenu('left')}>
-            &lt;
-          </button>
-          <button className="scroll-arrow right-arrow" onClick={() => scrollMenu('right')}>
-            &gt;
-          </button>
-        </>
-      )}
+      <button onClick={() => scrollMenu('left')}>&lt;</button>
+      <button onClick={() => scrollMenu('right')}>&gt;</button>
     </div>
   );
 };

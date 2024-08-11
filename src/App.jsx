@@ -19,10 +19,29 @@ function App() {
   const [activeCategory, setActiveCategory] = useState(0);
 
   const handleCategoryClick = (index) => {
-    setActiveCategory(index);
-    document
-      .getElementById(`section-${index}`)
-      .scrollIntoView({ behavior: "smooth" });
+    const scrollStep = index > activeCategory ? 1 : -1;
+    const scrollDuration = 500; // Total time for scrolling
+    const scrollInterval = 50; // Time between each step
+
+    const scrollToCategory = (currentIndex) => {
+      if (currentIndex === index) {
+        setActiveCategory(index);
+        document
+          .getElementById(`section-${index}`)
+          .scrollIntoView({ behavior: "smooth" });
+        return;
+      }
+
+      setActiveCategory(currentIndex);
+      document
+        .getElementById(`section-${currentIndex}`)
+        .scrollIntoView({ behavior: "smooth" });
+
+      setTimeout(() => scrollToCategory(currentIndex + scrollStep), scrollDuration / Math.abs(index - activeCategory));
+    };
+
+    // Start the scroll
+    scrollToCategory(activeCategory + scrollStep);
   };
 
   useEffect(() => {
@@ -52,18 +71,15 @@ function App() {
         onCategoryClick={handleCategoryClick}
       />
       <div className="sections">
-        {serviceCatalog.map((category, index) => {
-          console.log(category);
-          return (
-            <CategorySection
-              key={index}
-              id={index}
-              title={category.name}
-              data={category}
-              content={category.description}
-            />
-          );
-        })}
+        {serviceCatalog.map((category, index) => (
+          <CategorySection
+            key={index}
+            id={index}
+            title={category.name}
+            data={category}
+            content={category.description}
+          />
+        ))}
       </div>
     </div>
   );
