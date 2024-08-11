@@ -1,0 +1,114 @@
+body {
+  font-family: Arial, sans-serif;
+}
+
+.category-menu {
+  max-width: 840px;
+  display: flex;
+  overflow: hidden;
+  white-space: nowrap;
+  position: sticky;
+  top: 0;
+  background: white;
+  border-bottom: 1px solid black;
+  padding-bottom: 20px;
+  z-index: 1000;
+  border-bottom: none;
+  transition: border-bottom 0.3s ease;
+}
+
+.category-menu.scrolled {
+  border-bottom: 1px solid #ccc;
+}
+
+.menu-items {
+  display: flex;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  flex: 1;
+  scrollbar-width: none;
+}
+
+.menu-items::-webkit-scrollbar {
+  display: none;
+}
+
+.menu-item {
+  padding: 10px 20px;
+  margin: 0 5px;
+  margin-top: 40px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.3s, color 0.3s;
+  border-radius: 20px;
+}
+
+.menu-item:hover {
+  background-color: #f0f0f0;
+}
+
+.menu-item.active {
+  background: black;
+  color: white;
+}
+
+.category-section {
+  padding: 20px;
+}
+
+.main-description {
+  width: 800px;
+}
+
+.scroll-arrow {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 10px;
+  display: flex;
+  margin-top: 36px;
+}
+
+.left-arrow {
+  margin-right: 10px;
+}
+
+.right-arrow {
+  margin-left: 10px;
+}
+
+button {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 10px;
+}
+
+.titleDescription {
+  width: 800px;
+  border: 1px solid black;
+  margin-top: 10px;
+  padding-inline: 15px;
+  cursor: pointer;
+  border-radius: 10px;
+}
+
+.titleDescription:hover {
+  background-color: #f0f0f0;
+}
+
+.App {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.sub-description {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
