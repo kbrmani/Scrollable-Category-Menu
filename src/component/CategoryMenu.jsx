@@ -6,7 +6,7 @@ const CategoryMenu = ({ categories, activeCategory, onCategoryClick }) => {
   const scrollToSection = (index) => {
     const targetElement = document.getElementById(`section-${index}`);
     
-    // Check if element exists and smoothly scroll to it
+   
     if (targetElement) {
       targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
